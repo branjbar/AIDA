@@ -4,12 +4,16 @@ https://api.oadoi.org/10.1038/nature12373?email=b.ranjbarsahraei@tudelft.nl
 
 
 the input to this code is a dois.txt file that contains one doi per line.
+
+IMPORTANT: don't forget to add your email below.
 """
 
 import urllib
 import json
 
 FOLDER = ""
+
+your_email = ""
 
 thread_number = 0
 batch_size = 100000  
@@ -24,7 +28,7 @@ with open(file, "r") as f:
 
     # making the header
     doi = "10.1038/nature12373"
-    requestURL = "http://api.oadoi.org/%s?email=b.ranjbarsahraei@tudelft.nl" % doi
+    requestURL = "http://api.oadoi.org/%s?%s" % (doi, your_email)
     response = urllib.urlopen(requestURL).read()
     results = json.loads((response))["results"][0]
     header = results.keys()
@@ -36,7 +40,7 @@ with open(file, "r") as f:
         doi = l.replace('\n','')
         if doi:
             row = '%s\t' % doi
-            requestURL = "http://api.oadoi.org/%s?email=b.ranjbarsahraei@cwts.leidenuniv.nl" % doi
+            requestURL = "http://api.oadoi.org/%s?%s" % (doi, your_email)
             try:
                 response = json.loads((urllib.urlopen(requestURL).read()))
                 if "results" in response.keys():
